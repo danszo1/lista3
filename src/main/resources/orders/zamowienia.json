@@ -1,0 +1,28 @@
+{
+  "customerInfo": {
+    "firstName": "Lamine",
+    "lastName": "Yamal",
+    "email": "lamine.yamal@gmail.com",
+    "phone": "+48 533 590 410"
+  },
+  "items": [
+    {
+      "productCode": "1234",
+      "name": "Mleko",
+      "quantity": 1,
+      "unitOfMeasure": "szt."
+    },
+    {
+      "productCode": "5678",
+      "name": "Opakowanie śrub",
+      "quantity": 3,
+      "unitOfMeasure": "kg"
+    },
+    {
+      "productCode": "9012",
+      "name": "słuchawki gamingowe",
+      "quantity": 1,
+      "unitOfMeasure": "szt."
+    }
+  ]
+}
