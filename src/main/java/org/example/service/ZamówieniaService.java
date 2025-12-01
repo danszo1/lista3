@@ -26,7 +26,7 @@ public class ZamówieniaService {
         }
     }
 
-    private String generateOrderNumber(ŻądanieZamówienia order) {
+    String generateOrderNumber(ŻądanieZamówienia order) {
         String base = order.getCustomerInfo().getFirstName() +
                 order.getCustomerInfo().getLastName() +
                 order.getItems().size();
