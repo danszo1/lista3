@@ -8,23 +8,25 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class ZamówieniaService {
+
     private final ObjectMapper mapper = new ObjectMapper();
 
+    private final WalidacjaZamówienia walidator = new WalidacjaZamówienia();
+
     public ŻądanieZamówienia readOrder(File file) {
-        try
-        {
+        try {
             ŻądanieZamówienia order = mapper.readValue(file, ŻądanieZamówienia.class);
+
+            walidator.waliduj(order);
+
             order.setOrderNumber(generateOrderNumber(order));
             return order;
-        } catch (IOException e)
-
-        {
+        } catch (IOException e) {
             throw new RuntimeException("Błąd wczytywania pliku JSON: " + file.getName(), e);
         }
     }
 
-    private String generateOrderNumber(ŻądanieZamówienia order)
-    {
+    private String generateOrderNumber(ŻądanieZamówienia order) {
         String base = order.getCustomerInfo().getFirstName() +
                 order.getCustomerInfo().getLastName() +
                 order.getItems().size();
