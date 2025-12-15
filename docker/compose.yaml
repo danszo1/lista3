@@ -16,6 +16,24 @@ services:
 
     command: ["java", "-jar", "app.jar"]
 
+  registry:
+    image: registry:2
+    container_name: registry
+    restart: always
+    ports:
+     - "5000:5000"
+    volumes:
+     - ./data/registry:/var/lib/registry
+
+  gitlab-runner:
+    image: "gitlab/gitlab-runner:alpine3.21"
+    container_name: "gitlab-runner"
+    volumes:
+      - "./config:/etc/gitlab-runner"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
   gitlab:
       image: "gitlab/gitlab-ce:18.3.2-ce.0"
       container_name: "gitlab"

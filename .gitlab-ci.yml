@@ -1,0 +1,45 @@
+image: maven:3.9-eclipse-temurin-17
+
+cache:
+  paths:
+    - .m2/repository
+
+variables:
+   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
+stages:
+  - build
+  - static-analysis
+  - test
+
+kompilacja:
+  stage: build
+  script:
+    - echo "Rozpoczynam kompilację projektu..."
+    - mvn compile
+  artifacts:
+    paths:
+      - target/
+    expire_in: 1 hour
+
+checkstyle:
+  stage: static-analysis
+  script:
+    - echo "Uruchamiam sprawdzanie stylu kodu..."
+    - mvn checkstyle:check
+  dependencies:
+    - kompilacja
+  allow_failure: false
+
+testy:
+  stage: test
+  script:
+    - echo "Uruchamiam testy jednostkowe..."
+    - mvn test
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+  dependencies:
+    - kompilacja
